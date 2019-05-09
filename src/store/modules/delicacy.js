@@ -3,7 +3,7 @@ import validate from '../../validations/delicacy';
 
 
 const state = {
-    delicacies: []
+    all: []
 };
 
 const getters = {
@@ -13,7 +13,9 @@ const getters = {
      * @param state
      * @return {function(*): {id: string, name: string, price: number, description: string}}
      */
-    getById: (state) => (id) => state.delicacies.find(item => item.id === id),
+    getById: (state) => (id) => {
+        return state.all.find(item => item.id === id)
+    },
 
     /**
      * Get a list of delicacies where price greater than 100.
@@ -21,28 +23,36 @@ const getters = {
      * @param state
      * @return {{id: string, name: string, price: number, description: string}[]}
      */
-    highPrice: (state) => state.delicacies.filter(item => item.price > 100)
+    highPrice: (state) => state.all.filter(item => item.price > 100)
 };
 
 const mutations = {
+    testSet(state, delicacies) {
+        state.all = delicacies
+    },
+
+    testAppend(state, delicacies) {
+        state.all = state.all.concat(delicacies)
+    },
+
     /**
-     * Await set a page of delicacies to `state.delicacies`.
+     * Await set a page of delicacies to `state.all`.
      *
      * @param state
      * @param {{id: string, name: string, price: number, description: string}[]} delicacies
      */
     set(state, delicacies) {
-        state.delicacies = delicacies
+        state.all = delicacies
     },
 
     /**
-     * Await append a page of delicacies to `state.delicacies`.
+     * Await append a page of delicacies to `state.all`.
      *
      * @param state
      * @param {{id: string, name: string, price: number, description: string}[]} delicacies
      */
     append(state, delicacies) {
-        state.delicacies = state.delicacies.concat(delicacies)
+        state.all = state.all.concat(delicacies)
     },
 
     /**
@@ -52,7 +62,7 @@ const mutations = {
      * @param {{id: string, name: string, price: number, description: string}} delicacy
      */
     update(state, delicacy) {
-        state.delicacies = state.delicacies.map(item => (item.id === delicacy.id) ? delicacy : item)
+        state.all = state.all.map(item => (item.id === delicacy.id) ? delicacy : item)
     },
 
     /**
@@ -62,30 +72,50 @@ const mutations = {
      * @param {string} id
      */
     delete(state, id) {
-        state.delicacies = state.delicacies.filter(item => item.id !== id)
+        state.all = state.all.filter(item => item.id !== id)
     }
 };
 
 const actions = {
+    testSet({ commit }) {
+        api.getAllTestData(delicacies => {
+            commit("testSet", delicacies)
+        })
+    },
+
+    testAppend({ commit }) {
+        api.getMoreTestData(delicacies => {
+            commit("testAppend", delicacies)
+        })
+    },
+
+    testUpdate({ commit }, data) {
+        setTimeout(() => commit("update", data), 1000)
+    },
+
+    testDelete({ commit }, id) {
+        setTimeout(() => commit("delete", id), 1000)
+    },
+
     /**
-     * Sync set a page of delicacies to `state.delicacies`.
+     * Sync set a page of delicacies to `state.all`.
      *
      * @param commit
      */
-    set({commit}) {
+    set({ commit }) {
         api.getByPage(1, delicacies => {
             commit("set", delicacies)
         })
     },
 
     /**
-     * Sync append a page of delicacies to `state.delicacies`.
+     * Sync append a page of delicacies to `state.all`.
      *
      * @param commit
      * @param {number} page
      * @return {*|string|boolean}
      */
-    append({commit}, page) {
+    append({ commit }, page) {
         let validation = validate.page(page);
         if (validation) return validation;
 
@@ -101,7 +131,7 @@ const actions = {
      * @param {{id: string, name: string, price: number, description: string}} data
      * @return {*|string|boolean}
      */
-    update({commit}, data) {
+    update({ commit }, data) {
         let validation = validate.data(data);
         if (validation) return validation;
 
@@ -117,7 +147,7 @@ const actions = {
      * @param {string} id
      * @return {*|string|boolean}
      */
-    delete({commit}, id) {
+    delete({ commit }, id) {
         let validation = validate.id(id);
         if (validation) return validation;
 
