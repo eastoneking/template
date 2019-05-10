@@ -51,16 +51,16 @@ export default {
             return "name must be string."
         }
 
-        if (typeof data.price !== "number") {
-            console.error("price must be number.");
-            return "price must be number."
-        }
+        // if (typeof data.price !== "number") {
+        //     console.error("price must be number.");
+        //     return "price must be number."
+        // }
 
-        let priceString = data.price.toString();
-        if ((priceString.length - priceString.indexOf(".")) > 3) {
-            console.error("price is at most 2 decimal places.");
-            return "price is at most 2 decimal places."
-        }
+        // let priceString = data.price.toString();
+        // if ((priceString.length - priceString.indexOf(".")) > 3) {
+        //     console.error("price is at most 2 decimal places.");
+        //     return "price is at most 2 decimal places."
+        // }
 
         if (typeof data.description !== "string" || data.description.length > 200) {
             console.error("description must be string and less than 200 words.");

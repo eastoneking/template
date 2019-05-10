@@ -7,7 +7,6 @@ import "bulma/bulma.sass";
 
 Vue.config.productionTip = false;
 
-
 new Vue({
   router,
   store,

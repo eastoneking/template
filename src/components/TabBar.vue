@@ -1,7 +1,7 @@
 <template>
     <div class="tabs tabs_self is-fullwidth">
         <ul>
-            <router-link tag="li" active-class="is-active" to="/" exact="">
+            <router-link tag="li" active-class="is-active" to="/" exact>
                 <a>主页</a>
             </router-link>
             <router-link tag="li" active-class="is-active" to="/about/a">
@@ -18,9 +18,9 @@
 </template>
 
 <script>
-    export default {
-        name: "TabBar"
-    }
+export default {
+    name: "TabBar"
+};
 </script>
 
 <style lang="sass">
@@ -30,5 +30,6 @@
         bottom: 0
         left: 0
         background: #fff
-        border-top: 1px solid #dbdbdb
+        box-shadow: 0 -.4rem .8rem .4rem #dbdbdb
+        box-sizing: border-box
 </style>

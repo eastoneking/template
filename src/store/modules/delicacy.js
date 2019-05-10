@@ -2,7 +2,6 @@ import api from '../../apis/delicacy';
 import validate from '../../validations/delicacy';
 import cookie from '../../cookies/delicacy';
 
-
 const state = {
     all: []
 };
@@ -12,7 +11,7 @@ const getters = {
      * Get a delicacy by id.
      *
      * @param state
-     * @return {function(*): {id: string, name: string, price: number, description: string}}
+     * @return {function(*): {id: string, name: string, description: string}}
      */
     getById: (state) => (id) => {
         return state.all.find(item => item.id === id)
@@ -22,7 +21,7 @@ const getters = {
      * Get a list of delicacies where price greater than 100.
      *
      * @param state
-     * @return {{id: string, name: string, price: number, description: string}[]}
+     * @return {{id: string, name: string, description: string}[]}
      */
     highPrice: (state) => state.all.filter(item => item.price > 100)
 };
@@ -32,7 +31,7 @@ const mutations = {
      * Await set a page of delicacies to `state.all`.
      *
      * @param state
-     * @param {{id: string, name: string, price: number, description: string}[]} delicacies
+     * @param {{id: string, name: string, description: string}[]} delicacies
      */
     set(state, delicacies) {
         state.all = delicacies;
@@ -43,7 +42,7 @@ const mutations = {
      * Await append a page of delicacies to `state.all`.
      *
      * @param state
-     * @param {{id: string, name: string, price: number, description: string}[]} delicacies
+     * @param {{id: string, name: string, description: string}[]} delicacies
      */
     append(state, delicacies) {
         state.all = state.all.concat(delicacies);
@@ -54,7 +53,7 @@ const mutations = {
      * Await update a delicacy by id.
      *
      * @param state
-     * @param {{id: string, name: string, price: number, description: string}} delicacy
+     * @param {{id: string, name: string, description: string}} delicacy
      */
     update(state, delicacy) {
         state.all = state.all.map(item => (item.id === delicacy.id) ? delicacy : item)
@@ -123,7 +122,7 @@ const actions = {
      * Sync update a delicacy by id.
      *
      * @param commit
-     * @param {{id: string, name: string, price: number, description: string}} data
+     * @param {{id: string, name: string, description: string}} data
      * @return {*|string|boolean}
      */
     update({ commit }, data) {
