@@ -6,34 +6,32 @@ import Detail from "./views/Detail";
 
 import NotFound from './views/errors/NotFound';
 
-import delicacyCookie from './cookies/delicacy';
-
 Vue.use(Router);
 
 
 export default new Router({
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: "/",
-      name: "home",
-      component: Home
-    },
-    {
-      path: "/about",
-      name: "about",
-      component: About
-    },
-    {
-      path: "/detail",
-      name: "detail",
-      component: Detail
-    },
-    {
-      path: "*",
-      name: "not-found",
-      component: NotFound
-    }
-  ]
+    mode: "history",
+    base: process.env.BASE_URL,
+    routes: [
+        {
+            path: "/",
+            name: "home",
+            component: Home
+        },
+        {
+            path: "/delicacy",
+            name: "delicacy",
+            component: About
+        },{
+            path: "/delicacy/:id",
+            name: "delicacy-detail",
+            component: Detail,
+            props: true
+        },
+        {
+            path: "*",
+            name: "not-found",
+            component: NotFound
+        }
+    ]
 });

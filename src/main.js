@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-// import "./assets/styles/weui-for-work.min.css";
+import "bulma/bulma.sass";
 
 Vue.config.productionTip = false;
 

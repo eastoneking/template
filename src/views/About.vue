@@ -4,7 +4,7 @@
       <div class="weui-panel__hd">测试数据列表</div>
       <div class="weui-panel__bd">
         <router-link
-          :to="{path: '/detail', query: {id: delicacy.id}}"
+          :to="'/delicacy/' + delicacy.id"
           v-for="delicacy in delicacies"
           :key="delicacy.id"
         >

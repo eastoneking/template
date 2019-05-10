@@ -28,7 +28,7 @@ const FIRST_TEST_DATA = [{
     name: "Food5",
     price: 88,
     description: "It's a delicious food."
-}]
+}];
 
 const SECOND_TEST_DATA = [{
     id: "6e924d16-6ec5-4ce2-b1cb-9b65cb016c83",
@@ -55,7 +55,7 @@ const SECOND_TEST_DATA = [{
     name: "Food10",
     price: 88,
     description: "It's a delicious food."
-}]
+}];
 
 /**
  * Local config

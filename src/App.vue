@@ -1,35 +1,49 @@
 <template>
     <div id="app">
-        <div id="nav">
-            <router-link to="/">Home</router-link>
-            |
-            <router-link to="/about">About</router-link>
-        </div>
-        <router-view/>
+        <transition :name="routerAnimation">
+            <router-view/>
+        </transition>
+        <TabBar v-if="screenWidth <= 768"/>
     </div>
 </template>
 
-<style lang="scss">
-    @import url("./assets/styles/weui-for-work.min.css") screen and(max-width: 768px);
+<script>
+    import TabBar from "@/components/TabBar";
 
-    #app {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
-
-    #nav {
-        padding: 30px;
-
-        a {
-            font-weight: bold;
-            color: #2c3e50;
-
-            &.router-link-exact-active {
-                color: #42b983;
+    export default {
+        name: "App",
+        data() {
+            return {
+                routerAnimation: "slide-left",
+                screenWidth: 0
             }
+        },
+        components: {
+            TabBar
+        },
+        mounted() {
+            let that = this;
+            window.onresize = () => {
+                that.screenWidth = window.innerWidth
+            }
+        },
+        beforeRouteUpdate(to, from, next) {
+            console.log("commit route update.");
+            const toDepth = to.path.split("/").length;
+            const fromDepth = to.path.split("/").length;
+            this.routerAnimation = toDepth < fromDepth ? "slide-right" : "slide-left";
+
+            next()
         }
     }
+</script>
+
+<style lang="sass">
+    #app
+        position: absolute
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+        background: #f5f5f5
 </style>

@@ -5,20 +5,23 @@ import validate from "../validations/delicacy";
 
 const CONFIG = {
     expires: 1,
-    domain: "",
     path: ""
 };
 
 export default {
-    get() {
-        return Cookie.getJSON("delicacies", CONFIG);
+    getAll() {
+        return Cookie.getJSON("delicacies")
+    },
+
+    getById(id) {
+        return this.getAll().find(delicacy => delicacy.id === id)
     },
 
     set(delicacies) {
         let validations = delicacies.filter(delicacy => validate.data(delicacy));
         if (validations.length > 0) return "data didn't pass validation.";
 
-        return Cookie.set("delicacies", delicacies, CONFIG);
+        return Cookie.set("delicacies", delicacies, CONFIG)
     },
 
     remove() {
@@ -26,6 +29,6 @@ export default {
     },
 
     exist() {
-        return !!this.get();
+        return !!this.getAll()
     }
 }
