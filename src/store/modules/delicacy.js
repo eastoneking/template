@@ -1,5 +1,6 @@
 import api from '../../apis/delicacy';
 import validate from '../../validations/delicacy';
+import cookie from '../../cookies/delicacy';
 
 
 const state = {
@@ -27,14 +28,6 @@ const getters = {
 };
 
 const mutations = {
-    testSet(state, delicacies) {
-        state.all = delicacies
-    },
-
-    testAppend(state, delicacies) {
-        state.all = state.all.concat(delicacies)
-    },
-
     /**
      * Await set a page of delicacies to `state.all`.
      *
@@ -42,7 +35,8 @@ const mutations = {
      * @param {{id: string, name: string, price: number, description: string}[]} delicacies
      */
     set(state, delicacies) {
-        state.all = delicacies
+        state.all = delicacies;
+        cookie.set(delicacies)
     },
 
     /**
@@ -52,7 +46,8 @@ const mutations = {
      * @param {{id: string, name: string, price: number, description: string}[]} delicacies
      */
     append(state, delicacies) {
-        state.all = state.all.concat(delicacies)
+        state.all = state.all.concat(delicacies);
+        cookie.set(state.all)
     },
 
     /**
@@ -79,13 +74,13 @@ const mutations = {
 const actions = {
     testSet({ commit }) {
         api.getAllTestData(delicacies => {
-            commit("testSet", delicacies)
+            commit("set", delicacies)
         })
     },
 
     testAppend({ commit }) {
         api.getMoreTestData(delicacies => {
-            commit("testAppend", delicacies)
+            commit("append", delicacies)
         })
     },
 

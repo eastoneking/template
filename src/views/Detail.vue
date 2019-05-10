@@ -9,13 +9,20 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
+
+import cookie from "../cookies/delicacy";
 
 export default {
   name: "Detail",
   computed: {
     delicacy() {
-      return this.$store.getters["delicacy/getById"](this.$route.query.id);
+      let id = this.$route.query.id;
+      let delicacies = this.$store.getters["delicacy/getById"](id);
+      if (!delicacies) {
+        delicacies = cookie.get().find(item => item.id === id)
+      }
+      return delicacies;
     }
   }
 };

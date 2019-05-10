@@ -4,6 +4,10 @@ import Home from "./views/Home.vue";
 import About from "./views/About";
 import Detail from "./views/Detail";
 
+import NotFound from './views/errors/NotFound';
+
+import delicacyCookie from './cookies/delicacy';
+
 Vue.use(Router);
 
 
@@ -25,6 +29,11 @@ export default new Router({
       path: "/detail",
       name: "detail",
       component: Detail
+    },
+    {
+      path: "*",
+      name: "not-found",
+      component: NotFound
     }
   ]
 });

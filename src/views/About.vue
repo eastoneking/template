@@ -15,7 +15,7 @@
         </router-link>
       </div>
       <div class="weui-panel__ft">
-        <a href="#" class="weui-cell weui-cell_access weui-cell_link">
+        <a class="weui-cell weui-cell_access weui-cell_link" @click="getMore">
           <div class="weui-cell__bd">查看更多</div>
           <span class="weui-cell__ft"></span>
         </a>
@@ -25,14 +25,29 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
+
+import validate from "../validations/delicacy";
+
 
 export default {
   name: "About",
+  data() {
+    return {
+      page: 1
+    }
+  },
   computed: {
     ...mapState({
       delicacies: state => state.delicacy.all
     })
+  },
+  methods: {
+    getMore() {
+      let page = this.page + 1;
+
+      this.$store.dispatch("delicacy/testAppend", page);
+    }
   },
   created() {
     this.$store.dispatch("delicacy/testSet");
