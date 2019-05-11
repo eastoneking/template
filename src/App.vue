@@ -1,14 +1,18 @@
 <template>
-    <section id="app" class="section">
+    <section id="app" class="section columns">
+        <NavBar/>
+        <SideMenu class="column is-one-quarter-tablet is-one-fifth-desktop"/>
         <transition :name="routerAnimation">
-            <router-view/>
+            <router-view class="column is-three-quarters-tablet is-four-fifths-desktop"/>
         </transition>
         <TabBar v-if="screenWidth <= 768"/>
     </section>
 </template>
 
 <script>
+import NavBar from "@/components/NavBar";
 import TabBar from "@/components/TabBar";
+import SideMenu from "@/components/SideMenu";
 
 export default {
     name: "App",
@@ -19,7 +23,9 @@ export default {
         };
     },
     components: {
-        TabBar
+        NavBar,
+        TabBar,
+        SideMenu
     },
     mounted() {
         let that = this;
