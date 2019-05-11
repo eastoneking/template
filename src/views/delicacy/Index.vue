@@ -1,41 +1,46 @@
 <template>
-    <div class="container columns is-multiline">
-        <div class="card card_self column" v-for="delicacy in delicacies" :key="delicacy.id">
-            <header class="card-header">
-                <p class="card-header-title">{{delicacy.name}}</p>
-            </header>
-            <div class="card-content" @click="openModel(delicacy)">
-                <div class="content">
-                    <p>{{reduceDescription(delicacy.description)}}</p>
+    <div class="container">
+        <div class="cloumns is-multiline">
+            <div class="card card_self column" v-for="delicacy in delicacies" :key="delicacy.id">
+                <header class="card-header">
+                    <p class="card-header-title">{{delicacy.name}}</p>
+                </header>
+                <div class="card-content" @click="openModal(delicacy)">
+                    <div class="content">
+                        <p>{{reduceDescription(delicacy.description)}}</p>
+                    </div>
                 </div>
+                <footer class="card-footer">
+                    <a href="#" class="card-footer-item">Share</a>
+                    <a href="#" class="card-footer-item">Like</a>
+                </footer>
             </div>
-            <footer class="card-footer">
-                <a href="#" class="card-footer-item">Share</a>
-                <a href="#" class="card-footer-item">Like</a>
-            </footer>
+            <button class="button is-fullwidth is-info" @click="getMore">加载更多</button>
         </div>
-        <button class="button is-fullwidth is-info" @click="getMore">加载更多</button>
-        <Model :delicacy="delicacy" v-show="modelStatus"/>
+        <Modal
+            :delicacy="delicacy"
+            :closeModal="closeModal"
+            :class="modalStatus ? 'is-active' : ''"
+        />
     </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 
-import Model from "@/components/models/Delicacy";
-import { threadId } from "worker_threads";
+import Modal from "@/components/modals/Delicacy";
 
 export default {
     name: "About",
     data() {
         return {
             page: 1,
-            modelStatus: false,
+            modalStatus: false,
             delicacy: {}
         };
     },
     components: {
-        Model
+        Modal
     },
     computed: {
         ...mapState({
@@ -46,10 +51,12 @@ export default {
         goToDetail(id) {
             this.$router.push({ path: "/delicacy/" + id });
         },
-        openModel(delicacy) {
+        openModal(delicacy) {
             this.delicacy = delicacy;
-            this.modelStatus = true;
-            console.log(this.delicacy);
+            this.modalStatus = true;
+        },
+        closeModal() {
+            this.modalStatus = false;
         },
         reduceDescription(description) {
             return description.length > 100
